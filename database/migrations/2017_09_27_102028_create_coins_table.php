@@ -17,9 +17,9 @@ class CreateCoinsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('symbol');
-            $table->decimal('last_price',"8","8");
-            $table->string('total_supply');
-            $table->string('market_supply');
+            $table->decimal('last_price',"18","8");
+            $table->bigInteger('total_supply');
+            $table->bigInteger('market_supply');
             $table->timestamps();
         });
     }
