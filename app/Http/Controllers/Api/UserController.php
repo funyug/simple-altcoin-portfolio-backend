@@ -11,60 +11,67 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function login(Request $request) {
-        if($this->validateLogin($request)) {
+    public function postLogin(Request $request) {
+        $validator = $this->validateLogin($request);
+        if(!$validator->fails()) {
             $user = Auth::user();
             $access_token = $user->createToken($request->device_id);
             $data = ["access_token"=>$access_token];
             return success($data);
         }
+        return fail(["errors" => $validator->errors()]);
     }
 
-    public function signup(Request $request) {
-        if($this->validateSignup($request)) {
-            return $this->login($request);
+    public function postSignup(Request $request) {
+        $validator = $this->validateSignup($request);
+        if(!$validator->fails()) {
+            return $this->postLogin($request);
+        }
+        else {
+            return fail(["errors" => $validator->errors()]);
         }
     }
 
     public function validateLogin(Request $request) {
         $validator = Validator::make($request->all(),[
            "email"=>"required",
-           "password"=>"required"
+           "password"=>"required",
+            "device_id"=>"required"
         ]);
 
-        if($validator->fails()) {
-            return response($validator->errors()->all());
-        }
-        $user = User::where('email',$request->email)->first();
-        if($user) {
-            if(Hash::check($request->password,$user->password)) {
-                Auth::login($user);
-                return true;
+        $validator->after(function ($validator) use($request) {
+            if(count($validator->errors()->all()) < 1) {
+                $user = User::where('email',$request->email)->first();
+                if($user && Hash::check($request->password,$user->password)) {
+                    Auth::login($user);
+                }
+                else {
+                    $validator->errors()->add("incorrect_login","Username or password is incorrect");
+                }
             }
-        }
+        });
 
-        $validator->errors()->add("incorrect_login","Username or password is incorrect");
-
-        return response($validator->errors()->all());
+        return $validator;
     }
 
     public function validateSignup(Request $request) {
         $validator = Validator::make($request->all(),[
             "name"=>"required",
             "email"=>"required|email",
-            "password"=>"required|min:6|max:32"
+            "password"=>"required|min:6|max:32",
+            "device_id"=>"required"
         ]);
 
-        if($validator->fails()) {
-            return response($validator->errors()->all());
-        }
-        $user = User::where('email',$request->email)->first();
-        if(!$user) {
-            User::createUser($request);
-            return true;
-        }
-        $validator->errors()->add("email_exists","Email already exists");
-        return response($validator->errors()->all());
-
+        $validator->after(function ($validator) use($request) {
+            if(count($validator->errors()->all()) < 1) {
+                $user = User::where('email', $request->email)->first();
+                if (!$user) {
+                    User::createUser($request);
+                } else {
+                    $validator->errors()->add("email_exists", "Email already exists");
+                }
+            }
+        });
+        return $validator;
     }
 }
