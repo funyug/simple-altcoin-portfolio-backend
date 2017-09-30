@@ -16,10 +16,10 @@ class CreateExchangesTable extends Migration
         Schema::create('exchanges', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('url');
-            $table->text('api_url');
+            $table->string('url')->nullable();
+            $table->text('api_url')->nullable();
             $table->boolean('active');
-            $table->integer('country_id');
+            $table->integer('country_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

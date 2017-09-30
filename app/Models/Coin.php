@@ -9,20 +9,15 @@ class Coin extends Model
     public static function getCoin($symbol) {
         $coin = Coin::where("symbol",$symbol)->first();
         if(!$coin) {
-            $data = new \stdClass;
-            $data->symbol = $symbol;
-            $coin = Coin::createCoin($data);
+            $coin = Coin::createCoin($symbol);
         }
         return $coin;
     }
 
-    public static function createCoin($data) {
+    public static function createCoin($symbol) {
         $coin = new Coin();
-        $coin->symbol = $data->symbol;
-        $coin->name = isset($data->name) ? $data->name : "";
-        $coin->last_price = isset($data->price_btc) ? $data->price_btc : 0;
-        $coin->total_supply = isset($data->total_supply) ? $data->total_supply : "";
-        $coin->market_cap = isset($data->market_cap_usd) ? $data->market_cap_usd : "";
+        $coin->name = "";
+        $coin->symbol = $symbol;
         $coin->save();
         return $coin;
     }
