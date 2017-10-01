@@ -16,4 +16,8 @@ use Illuminate\Http\Request;
 Route::namespace('Api')->group(function() {
     Route::post('/signup','UserController@postSignup');
     Route::post('/login','UserController@postLogin');
+
+    Route::middleware("auth_api")->group(function() {
+       Route::post('/portfolios','PortfolioController@storePortfolio');
+    });
 });

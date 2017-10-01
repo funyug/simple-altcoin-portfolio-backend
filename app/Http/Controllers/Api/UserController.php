@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function postLogin(Request $request) {
         $validator = $this->validateLogin($request);
-        if(!$validator->fails()) {
+        if($validator->passes()) {
             $user = Auth::user();
             $access_token = $user->createToken($request->device_id);
             $data = ["access_token"=>$access_token];
@@ -24,7 +24,7 @@ class UserController extends Controller
 
     public function postSignup(Request $request) {
         $validator = $this->validateSignup($request);
-        if(!$validator->fails()) {
+        if($validator->passes()) {
             return $this->postLogin($request);
         }
         else {

@@ -16,4 +16,13 @@ class Token extends Model
         $token->save();
         return $token->access_token;
     }
+
+    public static function getToken($token) {
+        $token = Token::where('access_token',$token)->where("valid",1)->first();
+        return $token;
+    }
+
+    public function user() {
+        return $this->belongsTo('App\User','user_id','id');
+    }
 }
