@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,5 +15,17 @@ class Portfolio extends Model
         $portfolio->portfolio_id = $portfolio_id;
         $portfolio->save();
         return $portfolio;
+    }
+
+    public static function getPortfolios($user_id,$portfolio_id) {
+        $portfolios = new Portfolio();
+        if($user_id) {
+            $portfolios = $portfolios->where("user_id",$user_id);
+        }
+        if($portfolio_id) {
+            $portfolios = $portfolio_id->where("portfolio_id",$portfolio_id);
+        }
+        $portfolios = $portfolios->get();
+        return $portfolios;
     }
 }

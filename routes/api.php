@@ -19,5 +19,6 @@ Route::namespace('Api')->group(function() {
 
     Route::middleware("auth_api")->group(function() {
        Route::post('/portfolios','PortfolioController@storePortfolio');
+       Route::get('/portfolios','PortfolioController@getPortfolios');
     });
 });
