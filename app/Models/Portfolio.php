@@ -28,4 +28,9 @@ class Portfolio extends Model
         $portfolios = $portfolios->get();
         return $portfolios;
     }
+
+    public static function getPortfolio($user_id,$portfolio_id) {
+        $portfolio = Portfolio::where("user_id",$user_id)->where('id',$portfolio_id)->first();
+        return $portfolio;
+    }
 }

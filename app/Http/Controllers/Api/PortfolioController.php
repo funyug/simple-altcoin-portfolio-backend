@@ -19,6 +19,7 @@ class PortfolioController extends Controller
         }
         return fail(["errors" => $validator->errors()]);
     }
+
     public function storePortfolio(Request $request) {
         $validator = $this->validateStorePortfolio($request);
         if($validator->passes()) {
@@ -26,6 +27,12 @@ class PortfolioController extends Controller
             return success($portfolio);
         }
         return fail(["errors" => $validator->errors()]);
+    }
+
+    public function getPortfolio($id) {
+        $user = Auth::user();
+        $portfolio = Portfolio::getPortfolio($user->id,$id);
+        return success($portfolio);
     }
 
     public function validateStorePortfolio(Request $request) {
