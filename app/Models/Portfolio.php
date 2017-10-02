@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Portfolio extends Model
 {
+    public $guarded = ['id'];
     public static function createPortfolio($name,$portfolio_id) {
         $portfolio = new Portfolio();
         $portfolio->name = $name;
@@ -32,5 +32,10 @@ class Portfolio extends Model
     public static function getPortfolio($user_id,$portfolio_id) {
         $portfolio = Portfolio::where("user_id",$user_id)->where('id',$portfolio_id)->first();
         return $portfolio;
+    }
+
+    public function updatePortfolio($name,$portfolio_id) {
+        $this->update(["name"=>$name,"portfolio_id"=>$portfolio_id]);
+        return $this;
     }
 }

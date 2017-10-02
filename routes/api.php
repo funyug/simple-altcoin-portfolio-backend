@@ -21,5 +21,6 @@ Route::namespace('Api')->group(function() {
        Route::post('/portfolios','PortfolioController@storePortfolio');
        Route::get('/portfolios','PortfolioController@getPortfolios');
        Route::get('/portfolios/{id}','PortfolioController@getPortfolio');
+       Route::put('/portfolios/{id}','PortfolioController@updatePortfolio');
     });
 });
