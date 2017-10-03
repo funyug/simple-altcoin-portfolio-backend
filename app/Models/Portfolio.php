@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
 class Portfolio extends Model
 {
+    use SoftDeletes;
     public $guarded = ['id'];
     public static function createPortfolio($name,$portfolio_id) {
         $portfolio = new Portfolio();
@@ -36,6 +38,11 @@ class Portfolio extends Model
 
     public function updatePortfolio($name,$portfolio_id) {
         $this->update(["name"=>$name,"portfolio_id"=>$portfolio_id]);
+        return $this;
+    }
+
+    public function deletePortfolio() {
+        $this->delete();
         return $this;
     }
 }

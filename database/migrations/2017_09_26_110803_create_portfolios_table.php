@@ -18,6 +18,7 @@ class CreatePortfoliosTable extends Migration
             $table->string('name');
             $table->integer('user_id')->unsigned();
             $table->integer('portfolio_id')->unsigned()->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
