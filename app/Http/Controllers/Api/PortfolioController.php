@@ -40,7 +40,8 @@ class PortfolioController extends Controller
         $portfolio = new Portfolio();
         $validator->after(function($validator) use($id,&$portfolio) {
             if(count($validator->errors()->all()) < 1) {
-                $portfolio = $portfolio->find($id);
+                $user = Auth::user();
+                $portfolio = $portfolio->where('id',$id)->where('user_id',$user->id)->first();
                 if($portfolio == null) {
                     $validator->errors()->add("invalid_portfolio","Portfolio not found");
                 }
@@ -59,7 +60,8 @@ class PortfolioController extends Controller
         $portfolio = new Portfolio();
         $validator->after(function($validator) use($id,&$portfolio) {
             if(count($validator->errors()->all()) < 1) {
-                $portfolio = $portfolio->find($id);
+                $user = Auth::user();
+                $portfolio = $portfolio->where('id',$id)->where('user_id',$user->id)->first();
                 if($portfolio == null) {
                     $validator->errors()->add("invalid_portfolio","Portfolio not found");
                 }
