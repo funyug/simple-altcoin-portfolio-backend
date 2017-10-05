@@ -86,7 +86,6 @@ class PortfolioController extends Controller
 
     public function validateGetPortfolios(Request $request) {
         $validator = Validator::make($request->all(),[
-            "user_id"=>"integer",
             "portfolio_id"=>"integer"
         ]);
 
