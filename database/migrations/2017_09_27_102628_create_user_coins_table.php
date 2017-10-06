@@ -16,9 +16,9 @@ class CreateUserCoinsTable extends Migration
         Schema::create('user_coins', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('coin_id')->unsigned();
-            $table->decimal('entry_price',8,8);
-            $table->decimal('amount',8,8);
-            $table->decimal('exit_price',8,8)->nullable();
+            $table->decimal('entry_price',18,8);
+            $table->decimal('amount',18,8);
+            $table->decimal('exit_price',18,8)->nullable();
             $table->integer('portfolio_id')->unsigned();
             $table->timestamps();
         });

@@ -94,7 +94,7 @@ class PortfolioController extends Controller
 
     public function validateUpdatePortfolio(Request $request) {
         $validator = Validator::make($request->all(),[
-            "name"=>"string",
+            "name"=>"required|string",
             "portfolio_id"=>"integer"
         ]);
 
