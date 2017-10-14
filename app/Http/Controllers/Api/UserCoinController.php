@@ -100,7 +100,7 @@ class UserCoinController extends Controller
             "coin_id"=>"required|integer",
             "amount"=>"required|numeric",
             "entry_price"=>"required|numeric",
-            "exit_price"=>"numeric"
+            "exit_price"=>"numeric|nullable"
         ]);
 
         $validator->after(function($validator) use($request) {
@@ -125,7 +125,7 @@ class UserCoinController extends Controller
             "portfolio_id"=>"required|integer",
             "amount"=>"required|numeric",
             "entry_price"=>"required|numeric",
-            "exit_price"=>"required|numeric"
+            "exit_price"=>"numeric|nullable"
         ]);
 
         return $validator;
