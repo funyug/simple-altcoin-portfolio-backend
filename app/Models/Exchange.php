@@ -19,11 +19,20 @@ class Exchange extends Model
         return $exchange;
     }
 
+    public static function getExchangeCoins($id) {
+        $exchange = Exchange::with('coins')->find($id);
+        return $exchange;
+    }
+
     public static function createExchange($exchange_name) {
         $exchange = new Exchange();
         $exchange->name = $exchange_name;
         $exchange->active = 1;
         $exchange->save();
+    }
+
+    public function coins() {
+        return $this->belongsToMany(Coin::class,'exchange_coins','exchange_id','coin_id');
     }
 
 }

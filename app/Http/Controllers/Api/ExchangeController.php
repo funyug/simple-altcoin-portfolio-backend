@@ -12,4 +12,9 @@ class ExchangeController extends Controller
         $exchanges = Exchange::getExchanges();
         return success($exchanges);
     }
+
+    public function getExchangeCoins($id) {
+        $exchange = Exchange::getExchangeCoins($id);
+        return $exchange;
+    }
 }
