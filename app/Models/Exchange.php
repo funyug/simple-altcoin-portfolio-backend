@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Exchange extends Model
 {
+    public static function getExchanges() {
+        $exchanges = Exchange::where('active',1)->get();
+        return $exchanges;
+    }
+
     public static function getExchange($exchange_name) {
         $exchange = Exchange::where('name',$exchange_name)->first();
         if(!$exchange) {

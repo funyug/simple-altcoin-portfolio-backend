@@ -34,5 +34,7 @@ Route::namespace('Api')->group(function() {
        Route::get('/user_coins/{id}','UserCoinController@getUserCoin');
        Route::put('/user_coins/{id}','UserCoinController@updateUserCoin');
        Route::delete('/user_coins/{id}','UserCoinController@deleteUserCoin');
+
+       Route::get('/exchanges','ExchangeController@getExchanges');
     });
 });
