@@ -32,8 +32,12 @@ class Portfolio extends Model
     }
 
     public static function getPortfolio($user_id,$portfolio_id) {
-        $portfolio = Portfolio::where("user_id",$user_id)->where('id',$portfolio_id)->first();
+        $portfolio = Portfolio::with('coins')->where("portfolio_id",$user_id)->where('id',$portfolio_id)->first();
         return $portfolio;
+    }
+
+    public function coins() {
+        return $this->hasMany(UserCoin::class,'user_id','coin_id');
     }
 
     public function updatePortfolio($name,$portfolio_id) {

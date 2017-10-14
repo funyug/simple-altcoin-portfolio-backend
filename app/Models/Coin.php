@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Coin extends Model
 {
@@ -20,6 +21,10 @@ class Coin extends Model
         $coin->symbol = $symbol;
         $coin->save();
         return $coin;
+    }
+
+    public function tags() {
+        return $this->belongsToMany(Tag::class,'tag_coin','tag_id','coin_id')->wherePivot('user_id',Auth::user()->id);
     }
 
     public function updateCoin($data) {
