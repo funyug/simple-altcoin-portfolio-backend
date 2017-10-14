@@ -24,6 +24,14 @@ class ExchangeCoin extends Model
         return $exchange_coin;
     }
 
+    public function coin() {
+        return $this->belongsTo(Coin::class,'coin_id','id');
+    }
+
+    public function exchange() {
+        return $this->belongsTo(Exchange::class,'exchange_id','id');
+    }
+
     public function updateCoin($volume,$last_price,$price_24h_ago) {
         $this->volume = $volume;
         $this->last_price = $last_price;

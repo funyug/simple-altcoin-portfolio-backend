@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserCoin extends Model
 {
-    public function coin()
+    public function exchange_coin()
     {
-        return $this->belongsTo(Coin::class, 'coin_id', 'id');
+        return $this->belongsTo(ExchangeCoin::class, 'coin_id', 'id');
     }
 
     public function portfolio()
