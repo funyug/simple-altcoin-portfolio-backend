@@ -21,7 +21,7 @@ Route::namespace('Api')->group(function() {
 	
     Route::post('/signup','UserController@postSignup');
     Route::post('/login','UserController@postLogin');
-    Route::get('/exchanges/{id}','ExchangeController@getExchangeCoins');
+
     Route::middleware("auth_api")->group(function() {
        Route::post('/portfolios','PortfolioController@storePortfolio');
        Route::get('/portfolios','PortfolioController@getPortfolios');
@@ -36,6 +36,6 @@ Route::namespace('Api')->group(function() {
        Route::delete('/user_coins/{id}','UserCoinController@deleteUserCoin');
 
        Route::get('/exchanges','ExchangeController@getExchanges');
-
+       Route::get('/exchanges/{id}','ExchangeController@getExchangeCoins');
     });
 });
