@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Portfolio extends Model
 {
@@ -32,7 +33,8 @@ class Portfolio extends Model
     }
 
     public static function getPortfolio($user_id,$portfolio_id) {
-        $portfolio = Portfolio::with('coins','coins.exchange_coin','coins.exchange_coin.coin')->where("user_id",$user_id)->where('id',$portfolio_id)->first();
+        $portfolio = Portfolio::where('id',$portfolio_id)->where("user_id",$user_id)->first();
+        $portfolio->coins = UserCoin::with('exchange_coin','exchange_coin.coin')->where('portfolio_id',$portfolio_id)->groupBy('coin_id')->select(DB::raw('*,avg(entry_price * amount) as avg_price,sum(amount) as sum_amount'))->get();
         return $portfolio;
     }
 
