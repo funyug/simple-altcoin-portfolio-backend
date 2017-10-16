@@ -14,7 +14,7 @@ class CreateTableTagCoin extends Migration
     public function up()
     {
         Schema::create('tag_coin',function($table) {
-            $table->increment('id');
+            $table->increments('id');
             $table->integer('coin_id')->unsigned();
             $table->integer('tag_id')->unsigned();
             $table->integer('user_id')->unsigned();
