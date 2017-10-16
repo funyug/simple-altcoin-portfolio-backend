@@ -19,7 +19,7 @@ class CreateCoinsTable extends Migration
             $table->string('symbol');
             $table->decimal('last_price',"18","8")->nullable();
             $table->bigInteger('total_supply')->nullable();
-            $table->bigInteger('market_supply')->nullable();
+            $table->bigInteger('market_cap')->nullable();
             $table->timestamps();
         });
     }
