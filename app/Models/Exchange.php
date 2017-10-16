@@ -29,6 +29,7 @@ class Exchange extends Model
         $exchange->name = $exchange_name;
         $exchange->active = 1;
         $exchange->save();
+        return $exchange;
     }
 
     public function coins() {
