@@ -29,6 +29,6 @@ class CreateTableTagCoin extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('tag_coin');
     }
 }
