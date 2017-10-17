@@ -20,7 +20,7 @@ class Exchange extends Model
     }
 
     public static function getExchangeCoins($id) {
-        $exchange = Exchange::with('coins','coins.coin','coins.currency')->find($id);
+        $exchange = Exchange::with('coins')->find($id);
         return $exchange;
     }
 

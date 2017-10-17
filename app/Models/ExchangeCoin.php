@@ -9,7 +9,9 @@ class ExchangeCoin extends Model
     public $appends = ['text'];
 
     public function getTextAttribute() {
-        return $this->currency->currency_code."-".$this->coin->symbol;
+        $text = $this->currency->currency_code."-".$this->coin->symbol;
+        $this->setRelations([]);
+        return $text;
     }
 
     public static function getCoin($currency,$symbol,$exchange_name) {
