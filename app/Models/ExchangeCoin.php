@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExchangeCoin extends Model
 {
+    public $appends = ['text'];
+
+    public function getTextAttribute() {
+        return $this->currency->currency_code."-".$this->coin->symbol;
+    }
+
     public static function getCoin($currency,$symbol,$exchange_name) {
         $exchange = Exchange::getExchange($exchange_name);
         $coin = Coin::getCoin($symbol);
