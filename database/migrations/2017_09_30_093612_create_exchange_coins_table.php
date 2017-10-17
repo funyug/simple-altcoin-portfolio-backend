@@ -17,6 +17,7 @@ class CreateExchangeCoinsTable extends Migration
             $table->increments('id');
             $table->integer('exchange_id')->unsigned();
             $table->integer('coin_id')->unsigned();
+            $table->integer('currency_id')->unsigned();
             $table->decimal('volume',18,8)->nullable();
             $table->decimal('last_price',18,8)->nullable();
             $table->decimal("price_24h_ago",18,8)->nullable();

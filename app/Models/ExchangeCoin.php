@@ -6,20 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExchangeCoin extends Model
 {
-    public static function getCoin($symbol,$exchange_name) {
+    public static function getCoin($currency,$symbol,$exchange_name) {
         $exchange = Exchange::getExchange($exchange_name);
         $coin = Coin::getCoin($symbol);
-        $exchange_coin = ExchangeCoin::where('exchange_id',$exchange->id)->where('coin_id',$coin->id)->first();
+        $currency = Currency::getCurrency($currency);
+        $exchange_coin = ExchangeCoin::where('exchange_id',$exchange->id)->where('currency_id',$currency->id)->where('coin_id',$coin->id)->first();
         if(!$exchange_coin) {
-            $exchange_coin = ExchangeCoin::createCoin($coin->id,$exchange->id);
+            $exchange_coin = ExchangeCoin::createCoin($currency->id,$coin->id,$exchange->id);
         }
         return $exchange_coin;
     }
 
-    public static function createCoin($coin_id,$exchange_id) {
+    public static function createCoin($currency_id,$coin_id,$exchange_id) {
         $exchange_coin = new ExchangeCoin();
         $exchange_coin->coin_id = $coin_id;
         $exchange_coin->exchange_id = $exchange_id;
+        $exchange_coin->currency_id = $currency_id;
         $exchange_coin->save();
         return $exchange_coin;
     }

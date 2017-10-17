@@ -45,11 +45,9 @@ class FetchBittrexPrices extends Command
         if(isset($response->result)) {
             $coins = $response->result;
             foreach ($coins as $coin_data) {
-                if(strpos($coin_data->MarketName,"BTC-") === 0) {
-                    $symbol = str_replace("BTC-","", $coin_data->MarketName);
-                    $exchange_coin = ExchangeCoin::getCoin($symbol,"Bittrex");
-                    $exchange_coin->updateCoin($coin_data->Volume,$coin_data->Last,$coin_data->PrevDay);
-                }
+                $symbols = explode("-",$coin_data->MarketName);
+                $exchange_coin = ExchangeCoin::getCoin($symbols[0],$symbols[1],"Bittrex");
+                $exchange_coin->updateCoin($coin_data->Volume,$coin_data->Last,$coin_data->PrevDay);
             }
         }
     }
