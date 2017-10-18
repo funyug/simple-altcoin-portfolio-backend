@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 
 class CoinController extends Controller
 {
-    public function getCoin($id) {
-        $coin = Coin::getCoinById($id);
+    public function getCoin($symbol) {
+        $coin = Coin::getCoin($symbol,0);
         return success($coin);
     }
 }

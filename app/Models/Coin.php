@@ -8,16 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class Coin extends Model
 {
-    public static function getCoin($symbol) {
-        $coin = Coin::where("symbol",$symbol)->first();
-        if(!$coin) {
+    public static function getCoin($symbol,$create_coin = 1) {
+        $coin = Coin::with('currencies')->where("symbol",$symbol)->first();
+        if(!$coin && $create_coin == 1) {
             $coin = Coin::createCoin($symbol);
         }
-        return $coin;
-    }
-
-    public static function getCoinById($id) {
-        $coin = Coin::with('currencies')->find($id);
         return $coin;
     }
 
