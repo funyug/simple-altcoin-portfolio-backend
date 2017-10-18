@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\ExchangeCoin;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class GetUSPrices extends Command
 {
@@ -40,6 +41,15 @@ class GetUSPrices extends Command
     public function handle()
     {
         $client = new Client();
+        $this->getBitfinexBTCPrice($client);
+        $this->getBitfinexETHPrice($client);
+        $this->getBitfinexLTCPrice($client);
+        $this->getGDAXBTCPrice($client);
+        $this->getGDAXETHPrice($client);
+        $this->getGDAXLTCPrice($client);
+    }
+
+    public function getBitfinexBTCPrice($client) {
         try {
             $response = $client->request("GET", 'https://api.bitfinex.com/v1/pubticker/btcusd');
             $response = json_decode($response->getBody()->getContents());
@@ -47,9 +57,11 @@ class GetUSPrices extends Command
             $exchange_coin->updateCoin($response->volume, $response->last_price, null);
         }
         catch(\Exception $e) {
-
+            Log::error($e);
         }
+    }
 
+    public function getBitfinexLTCPrice($client) {
         try {
             $response = $client->get('https://api.bitfinex.com/v1/pubticker/ltcusd');
             $response = json_decode($response->getBody()->getContents());
@@ -57,9 +69,11 @@ class GetUSPrices extends Command
             $exchange_coin->updateCoin($response->volume, $response->last_price, null);
         }
         catch (\Exception $e) {
-
+            Log::error($e);
         }
+    }
 
+    public function getBitfinexETHPrice($client) {
         try {
             $response = $client->get('https://api.bitfinex.com/v1/pubticker/ethusd');
             $response = json_decode($response->getBody()->getContents());
@@ -67,9 +81,11 @@ class GetUSPrices extends Command
             $exchange_coin->updateCoin($response->volume, $response->last_price, null);
         }
         catch (\Exception $e) {
-
+            Log::error($e);
         }
+    }
 
+    public function getGDAXBTCPrice($client) {
         try {
             $response = $client->get('https://api.gdax.com/products/BTC-USD/ticker');
             $response = json_decode($response->getBody()->getContents());
@@ -77,19 +93,11 @@ class GetUSPrices extends Command
             $exchange_coin->updateCoin($response->volume, $response->price, null);
         }
         catch (\Exception $e) {
-
+            Log::error($e);
         }
+    }
 
-        try {
-            $response = $client->get('https://api.gdax.com/products/ETH-USD/ticker');
-            $response = json_decode($response->getBody()->getContents());
-            $exchange_coin = ExchangeCoin::getCoin("USD", "ETH", "GDAX");
-            $exchange_coin->updateCoin($response->volume, $response->price, null);
-        }
-        catch (\Exception $e) {
-
-        }
-
+    public function getGDAXLTCPrice($client) {
         try {
             $response = $client->get('https://api.gdax.com/products/LTC-USD/ticker');
             $response = json_decode($response->getBody()->getContents());
@@ -97,8 +105,19 @@ class GetUSPrices extends Command
             $exchange_coin->updateCoin($response->volume, $response->price, null);
         }
         catch (\Exception $e) {
-
+            Log::error($e);
         }
+    }
 
+    public function getGDAXETHPrice($client) {
+        try {
+            $response = $client->get('https://api.gdax.com/products/ETH-USD/ticker');
+            $response = json_decode($response->getBody()->getContents());
+            $exchange_coin = ExchangeCoin::getCoin("USD", "ETH", "GDAX");
+            $exchange_coin->updateCoin($response->volume, $response->price, null);
+        }
+        catch (\Exception $e) {
+            Log::error($e);
+        }
     }
 }
