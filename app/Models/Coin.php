@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Coin extends Model
 {
@@ -12,6 +13,11 @@ class Coin extends Model
         if(!$coin) {
             $coin = Coin::createCoin($symbol);
         }
+        return $coin;
+    }
+
+    public static function getCoinById($id) {
+        $coin = Coin::with('currencies')->find($id);
         return $coin;
     }
 
@@ -35,5 +41,9 @@ class Coin extends Model
         $this->name = $data->name;
         $this->save();
         return $this;
+    }
+
+    public function currencies() {
+        return $this->hasMany(ExchangeCoin::class,'coin_id','id')->groupBy('currency_id')->select(DB::raw("id,coin_id,currency_id,avg(last_price) as avg_price"));
     }
 }

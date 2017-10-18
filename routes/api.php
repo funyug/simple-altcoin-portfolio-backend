@@ -29,6 +29,8 @@ Route::namespace('Api')->group(function() {
        Route::put('/portfolios/{id}','PortfolioController@updatePortfolio');
        Route::delete('/portfolios/{id}','PortfolioController@deletePortfolio');
 
+       Route::get('/coins/{id}','CoinController@getCoin');
+
        Route::get('/user_coins','UserCoinController@getUserCoins');
        Route::post('/user_coins','UserCoinController@postUserCoins');
        Route::get('/user_coins/{id}','UserCoinController@getUserCoin');
