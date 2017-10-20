@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Coin;
+use App\Models\ExchangeCoin;
 use App\Models\Portfolio;
 use App\Models\UserCoin;
 use Illuminate\Http\Request;
@@ -25,7 +26,6 @@ class UserCoinController extends Controller
     public function postUserCoins(Request $request) {
         $validator = $this->validatePostUserCoins($request);
         if($validator->passes()) {
-            $user = Auth::user();
             $user_coins = UserCoin::createUserCoins($request);
             return success($user_coins);
         }
@@ -110,7 +110,7 @@ class UserCoinController extends Controller
                 if(!$portfolio) {
                     $validator->errors()->add("invalid_portfolio","Portfolio not found");
                 }
-                $coin = Coin::find($request->coin_id);
+                $coin = ExchangeCoin::find($request->coin_id);
                 if(!$coin) {
                     $validator->errors()->add("invalid_coin","Coin not found");
                 }
