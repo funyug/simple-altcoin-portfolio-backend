@@ -30,6 +30,7 @@ Route::namespace('Api')->group(function() {
        Route::delete('/portfolios/{id}','PortfolioController@deletePortfolio');
 
        Route::get('/coins/{id}','CoinController@getCoin');
+       Route::get('/coins/{id}/exchanges','CoinController@getExchanges');
 
        Route::get('/user_coins','UserCoinController@getUserCoins');
        Route::post('/user_coins','UserCoinController@postUserCoins');

@@ -24,8 +24,23 @@ class Coin extends Model
         return $coin;
     }
 
+    public static function getExchanges($symbol) {
+        $coin = Coin::getCoin($symbol,0);
+        if(!$coin) {
+            return [];
+        }
+
+        $coin->load('pairs.exchange');
+
+        return $coin->pairs;
+    }
+
     public function tags() {
         return $this->belongsToMany(Tag::class,'tag_coin','tag_id','coin_id')->wherePivot('user_id',Auth::user()->id);
+    }
+
+    public function pairs() {
+        return $this->hasMany(ExchangeCoin::class,'coin_id','id');
     }
 
     public function updateCoin($data) {

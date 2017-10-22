@@ -12,4 +12,9 @@ class CoinController extends Controller
         $coin = Coin::getCoin($symbol,0);
         return success($coin);
     }
+
+    public function getExchanges($symbol) {
+        $exchanges = Coin::getExchanges($symbol);
+        return success($exchanges);
+    }
 }

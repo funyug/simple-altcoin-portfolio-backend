@@ -24,6 +24,6 @@ class AuthenticateApi
                 return $next($request);
             }
         }
-        return fail(["errors"=>["invalid_token"=>"Invalid Token"]]);
+        return fail(["errors"=>["invalid_token"=>["Invalid Token"]]]);
     }
 }

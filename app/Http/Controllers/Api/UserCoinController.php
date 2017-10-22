@@ -48,11 +48,11 @@ class UserCoinController extends Controller
                     $query->where('user_id',$user->id);
                 })->first();
                 if($user_coin == null) {
-                    $validator->errors()->add("invalid_coin","Coin not found");
+                    $validator->errors()->add("invalid_coin",["Coin not found"]);
                 }
                 $portfolio = Portfolio::where('id',$request->portfolio_id)->where('user_id',$user->id)->first();
                 if(!$portfolio) {
-                    $validator->errors()->add("invalid_portfolio","Portfolio not found");
+                    $validator->errors()->add("invalid_portfolio",["Portfolio not found"]);
                 }
             }
         });
@@ -74,7 +74,7 @@ class UserCoinController extends Controller
                     $query->where('user_id',$user->id);
                 })->first();
                 if($user_coin == null) {
-                    $validator->errors()->add("invalid_coin","Coin not found");
+                    $validator->errors()->add("invalid_coin",["Coin not found"]);
                 }
             }
         });
@@ -99,8 +99,7 @@ class UserCoinController extends Controller
             "portfolio_id"=>"required|integer",
             "coin_id"=>"required|integer",
             "amount"=>"required|numeric",
-            "entry_price"=>"required|numeric",
-            "exit_price"=>"numeric|nullable"
+            "entry_price"=>"required|numeric"
         ]);
 
         $validator->after(function($validator) use($request) {
@@ -108,11 +107,11 @@ class UserCoinController extends Controller
                 $user = Auth::user();
                 $portfolio = Portfolio::where('id',$request->portfolio_id)->where('user_id',$user->id)->first();
                 if(!$portfolio) {
-                    $validator->errors()->add("invalid_portfolio","Portfolio not found");
+                    $validator->errors()->add("invalid_portfolio",["Portfolio not found"]);
                 }
                 $coin = ExchangeCoin::find($request->coin_id);
                 if(!$coin) {
-                    $validator->errors()->add("invalid_coin","Coin not found");
+                    $validator->errors()->add("invalid_coin",["Coin not found"]);
                 }
             }
         });
